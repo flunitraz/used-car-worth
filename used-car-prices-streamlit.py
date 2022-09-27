@@ -13,10 +13,10 @@ scaler = StandardScaler()
 sc = scaler.fit_transform(sc)
 
 
-modelYili = float(st.slider("Arac Kac model?", 2000,2020))
-mil = float(st.slider("Arac kac milde?", 250000, 1))
+modelYili = float(st.slider("Model Yili Nedir?", 2000,2020))
+mil = float(st.slider("Arac Kac Milde?", 250000, 1))
 motorHacmi = float(st.slider("Motor Hacmi Kac Litre?", 6.2, 1.3))
-mpg = float(st.slider("Ortalama Yakıt Tüketimi", 250.0, 15.0))
+mpg = float(st.slider("Galon Basina Mil Orani?", 250.0, 15.0))
 
 
 tahminArac = np.array([modelYili,mil,mpg,motorHacmi])
