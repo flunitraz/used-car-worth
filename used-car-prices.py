@@ -1,44 +1,16 @@
 import numpy as np
 import pandas as pd
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error
+import pickle 
 
-data = pd.read_excel("used-car-prices.xlsx")
+pickle_in = open('model', 'rb')
+model = pickle.load(pickle_in)
 
-data.drop(["transmission","tax"],axis=1,inplace=True)
-data = data[data["year"]>1999]
-data = data.sort_values("price",ascending=False).iloc[75:]
-
-y = data['price'].values
-x = data.drop('price',axis=1).values
-
-xtrain, xtest, ytrain, ytest = train_test_split(x,y,test_size=.3,random_state=10)
-
+sc = np.array(pd.read_excel("scaler.xlsx"))
+sc = np.delete(sc, 0, 1)
 scaler = StandardScaler()
-xtrain = scaler.fit_transform(xtrain)
-xtest = scaler.transform(xtest)
-
-model = Sequential()
-model.add(Dense(12,activation="relu"))
-model.add(Dense(12,activation="relu"))
-model.add(Dense(12,activation="relu"))
-model.add(Dense(12,activation="relu"))
-model.add(Dense(1))
-model.compile(optimizer="adam", loss="mse")
-model.fit(x=xtrain, y=ytrain, validation_data=(xtest,ytest), batch_size=100, epochs=200)
-
-predict = model.predict(xtest)
-hata = mean_absolute_error(ytest,predict)/ytest.mean()
-print(f"hata orani = {hata}")
-
-# for i in range(40,80):
-#     arac = xtest[i]
-#     arac = arac.reshape(-1,4)
-#     print(f"\ntahmin edilen fiyat = {model.predict(arac)} \nolmasi gereken = {ytest[i]}")
-    
+scaler.fit_transform(sc)
+   
 while True:
     try:
         print("\n==========================================================")
@@ -72,10 +44,4 @@ while True:
             continue
         else:
             break
-            
-        
-
-
-
-
-
+      
